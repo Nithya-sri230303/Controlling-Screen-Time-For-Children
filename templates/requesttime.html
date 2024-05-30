@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Screen Time Control</title>
+    <style>
+        body {
+/* Updated styles for text box and toggle switch */
+.input-field{
+    font-size: 25px;
+    color:black;
+    background: white;
+    color: white;
+    height: 50px;
+    width: 80%;
+    padding: 0 20px 0 45px;
+    border: none;
+    border-radius: 30px;
+    outline: none;
+    transition: .2s ease;
+}
+.input-field:hover, .input-field:focus{
+    background: rgba(255, 255, 255, 0.25);
+}
+
+/* Toggle switch */
+.switch {
+    display: inline-block;
+    height: 34px;
+    position: relative;
+    width: 60px;
+}
+
+.switch input {
+    display: none;
+}
+
+.slider {
+    background-color: black;
+    border-radius: 34px;
+    bottom: 0;
+    cursor: pointer;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition: .4s;
+}
+
+.slider:before {
+    background-color: white;
+    border-radius: 50%;
+    bottom: 4px;
+    content: "";
+    height: 26px;
+    left: 4px;
+    position: absolute;
+    transition: .4s;
+    width: 26px;
+}
+
+input:checked + .slider {
+    background-color: #2196F3;
+}
+  
+  input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+  }
+  
+  input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+  }
+  
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f0f0f0;
+  margin: 0;
+  padding: 0;
+  overflow-y: scroll;
+  position: relative; /* Add position relative to allow absolute positioning */
+}
+.email-form {
+justify-content: center;
+align-items: center;
+position: absolute; /* Position absolute to place it on top */
+top: 150px; /* Adjust as needed */
+left: 50%; /* Center horizontally */
+transform: translateX(-50%); /* Center horizontally */
+background-color: rgb(180,158,181); /* Semi-transparent white background */
+padding: 30px;
+border-radius: 10px;
+box-shadow: 0 0 10px rgba(0, 0, 0, 0.); /* Shadow effect */
+z-index: 1; /* Ensure it's above the background */
+  
+}
+h1 {
+  color: ; /* Pink color */
+  text-align: center;
+  font-size: 40px;
+  margin-bottom: 20px;
+}
+.center{
+    margin: auto;
+    width: 60%;
+    padding: 10px;
+}
+.submit{
+    font-size: 20px;
+    font-style:Serif;
+    font-weight: 500;
+    color: black;
+    height: 45px;
+    width: 90%;
+    border: none;
+    border-radius: 30px;
+    outline: none;
+    background: rgb(128,0,128);
+    cursor: pointer;
+    transition: .3s ease-in-out;
+}
+.submit:hover{
+    background: rgba(255, 255, 255, 0.5);
+    box-shadow: 1px 5px 7px 1px rgba(0, 0, 0, 0.2);
+}
+input[type="submit"]:hover {
+  background-color: white; /* Darker white color on hover */
+}
+.container {
+  max-width: 1200px; /* Adjust as needed */
+  margin: 0 auto;
+  padding: 20px;
+  display: flex;
+  align-items: flex-start; /* Align items to the start */
+  flex-wrap: wrap; /* Allow columns to wrap */
+  z-index: 0; /* Ensure it's below the form */
+}
+.left-column {
+  flex: 0 0 20%; /* Take up 20% of the row width */
+  margin-right: 20px; /* Add margin to create space between the image and the activities */
+}
+
+.animation-container {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+.animation {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('https://i.pinimg.com/originals/55/01/60/5501609ee45d514d1f2c4a63502045e2.gif');
+  background-size: cover;
+  border-radius: 10px;
+  opacity: 0.8; /* Adjust the opacity here */
+}
+.top-image {
+  width: 100%;
+  height: auto;
+  margin-bottom: 20px;
+}
+p {
+  color: ; /* Dark blue color */
+  font-size: 20px;
+  font-weight: bold;
+}
+.left-column img, .right-column img {
+  width: 100%;
+  height: auto;
+  display: block; /* Remove any extra spacing */
+}
+.input-box i{
+    position: relative;
+    top: -35px;
+    left: 17px;
+    color: #fff;
+}
+    </style>
+</head>
+<body>
+    <div class="email-form">
+        <h1>Screen Time Control</h1>
+        <form action="/extratime" method="post">
+            <div class="input-box">
+            <input type="number" id="request_time" name="request_time" class="input-field" placeholder= "enter time request" style="color:black;" required><br><br>
+            <i class="bx bx-user"></i>
+            </div>
+            <div class="center">
+            <div class="input-box">
+            <input type="submit" class ="submit" value="REQUEST TIME">
+            <i class="bx bx-user"></i>
+            </div>
+            </div>
+        </form>
+        <form action="/toggle_screen_time" method="post">
+            <div class="input-box">
+            <p style=" color: black; text-align:center;">Off Screen Time</p>
+            <label class="switch">
+                <input type="checkbox" id="toggle_screen_time" onchange ="toggle_screen_time(this)" name="toggle_screen_time"{{ 'checked' if screen_time_limit else '' }}>
+                <span class="slider round"></span>
+                <i class="bx bx-user"></i>
+            </label>
+            </div>
+
+            <button type="submit" class ="submit">STOP</button>
+        </form>
+        
+    </div>
+    <img class="top-image" src="https://www.color-meanings.com/wp-content/uploads/2022/02/Purple-smoke-on-black-background-1024x684.jpeg" alt="Top Image">
+        
+        <!-- Right column here if needed -->
+    </div>
+    <script>
+      function toggleScreenTime(checkbox) {
+          if (checkbox.checked) {
+              // Send a POST request to Flask route when toggle is turned on
+              fetch('/toggle_screen_time', {
+                  method: 'POST',
+              });
+          }
+      }
+  </script>
+</body>
+</html>
